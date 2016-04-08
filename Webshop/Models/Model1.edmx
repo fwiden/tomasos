@@ -1,0 +1,538 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TomasosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bestallning">
+          <Key>
+            <PropertyRef Name="BestallningID" />
+          </Key>
+          <Property Name="BestallningID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BestallningDatum" Type="datetime" Nullable="false" />
+          <Property Name="Totalbelopp" Type="int" Nullable="false" />
+          <Property Name="Levererad" Type="bit" Nullable="false" />
+          <Property Name="KundID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BestallningMatratt">
+          <Key>
+            <PropertyRef Name="MatrattID" />
+            <PropertyRef Name="BestallningID" />
+          </Key>
+          <Property Name="MatrattID" Type="int" Nullable="false" />
+          <Property Name="BestallningID" Type="int" Nullable="false" />
+          <Property Name="Antal" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kund">
+          <Key>
+            <PropertyRef Name="KundID" />
+          </Key>
+          <Property Name="KundID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Namn" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Gatuadress" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Postnr" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Postort" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Telefon" Type="varchar" MaxLength="50" />
+          <Property Name="AnvandarNamn" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Losenord" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Matratt">
+          <Key>
+            <PropertyRef Name="MatrattID" />
+          </Key>
+          <Property Name="MatrattID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MatrattNamn" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Beskrivning" Type="varchar" MaxLength="200" />
+          <Property Name="Pris" Type="int" Nullable="false" />
+          <Property Name="MatrattTyp" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MatrattProdukt">
+          <Key>
+            <PropertyRef Name="MatrattID" />
+            <PropertyRef Name="ProduktID" />
+          </Key>
+          <Property Name="MatrattID" Type="int" Nullable="false" />
+          <Property Name="ProduktID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MatrattTyp">
+          <Key>
+            <PropertyRef Name="MatrattTyp" />
+          </Key>
+          <Property Name="MatrattTyp" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Beskrivning" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Produkt">
+          <Key>
+            <PropertyRef Name="ProduktID" />
+          </Key>
+          <Property Name="ProduktID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProduktNamn" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Bestallning_Kund">
+          <End Role="Kund" Type="Self.Kund" Multiplicity="1" />
+          <End Role="Bestallning" Type="Self.Bestallning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kund">
+              <PropertyRef Name="KundID" />
+            </Principal>
+            <Dependent Role="Bestallning">
+              <PropertyRef Name="KundID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BestallningMatratt_Bestallning">
+          <End Role="Bestallning" Type="Self.Bestallning" Multiplicity="1" />
+          <End Role="BestallningMatratt" Type="Self.BestallningMatratt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bestallning">
+              <PropertyRef Name="BestallningID" />
+            </Principal>
+            <Dependent Role="BestallningMatratt">
+              <PropertyRef Name="BestallningID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BestallningMatratt_Matratt">
+          <End Role="Matratt" Type="Self.Matratt" Multiplicity="1" />
+          <End Role="BestallningMatratt" Type="Self.BestallningMatratt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Matratt">
+              <PropertyRef Name="MatrattID" />
+            </Principal>
+            <Dependent Role="BestallningMatratt">
+              <PropertyRef Name="MatrattID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matratt_MatrattTyp">
+          <End Role="MatrattTyp" Type="Self.MatrattTyp" Multiplicity="1" />
+          <End Role="Matratt" Type="Self.Matratt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MatrattTyp">
+              <PropertyRef Name="MatrattTyp" />
+            </Principal>
+            <Dependent Role="Matratt">
+              <PropertyRef Name="MatrattTyp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MatrattProdukt_Matratt">
+          <End Role="Matratt" Type="Self.Matratt" Multiplicity="1" />
+          <End Role="MatrattProdukt" Type="Self.MatrattProdukt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Matratt">
+              <PropertyRef Name="MatrattID" />
+            </Principal>
+            <Dependent Role="MatrattProdukt">
+              <PropertyRef Name="MatrattID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MatrattProdukt_Produkt">
+          <End Role="Produkt" Type="Self.Produkt" Multiplicity="1" />
+          <End Role="MatrattProdukt" Type="Self.MatrattProdukt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produkt">
+              <PropertyRef Name="ProduktID" />
+            </Principal>
+            <Dependent Role="MatrattProdukt">
+              <PropertyRef Name="ProduktID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="GetMeny" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="TomasosModelStoreContainer">
+          <EntitySet Name="Bestallning" EntityType="Self.Bestallning" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BestallningMatratt" EntityType="Self.BestallningMatratt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kund" EntityType="Self.Kund" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Matratt" EntityType="Self.Matratt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MatrattProdukt" EntityType="Self.MatrattProdukt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MatrattTyp" EntityType="Self.MatrattTyp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Produkt" EntityType="Self.Produkt" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Bestallning_Kund" Association="Self.FK_Bestallning_Kund">
+            <End Role="Kund" EntitySet="Kund" />
+            <End Role="Bestallning" EntitySet="Bestallning" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BestallningMatratt_Bestallning" Association="Self.FK_BestallningMatratt_Bestallning">
+            <End Role="Bestallning" EntitySet="Bestallning" />
+            <End Role="BestallningMatratt" EntitySet="BestallningMatratt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BestallningMatratt_Matratt" Association="Self.FK_BestallningMatratt_Matratt">
+            <End Role="Matratt" EntitySet="Matratt" />
+            <End Role="BestallningMatratt" EntitySet="BestallningMatratt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matratt_MatrattTyp" Association="Self.FK_Matratt_MatrattTyp">
+            <End Role="MatrattTyp" EntitySet="MatrattTyp" />
+            <End Role="Matratt" EntitySet="Matratt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MatrattProdukt_Matratt" Association="Self.FK_MatrattProdukt_Matratt">
+            <End Role="Matratt" EntitySet="Matratt" />
+            <End Role="MatrattProdukt" EntitySet="MatrattProdukt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MatrattProdukt_Produkt" Association="Self.FK_MatrattProdukt_Produkt">
+            <End Role="Produkt" EntitySet="Produkt" />
+            <End Role="MatrattProdukt" EntitySet="MatrattProdukt" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TomasosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bestallning">
+          <Key>
+            <PropertyRef Name="BestallningID" />
+          </Key>
+          <Property Name="BestallningID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BestallningDatum" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Totalbelopp" Type="Int32" Nullable="false" />
+          <Property Name="Levererad" Type="Boolean" Nullable="false" />
+          <Property Name="KundID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Kund" Relationship="Self.FK_Bestallning_Kund" FromRole="Bestallning" ToRole="Kund" />
+          <NavigationProperty Name="BestallningMatratts" Relationship="Self.FK_BestallningMatratt_Bestallning" FromRole="Bestallning" ToRole="BestallningMatratt" />
+        </EntityType>
+        <EntityType Name="BestallningMatratt">
+          <Key>
+            <PropertyRef Name="MatrattID" />
+            <PropertyRef Name="BestallningID" />
+          </Key>
+          <Property Name="MatrattID" Type="Int32" Nullable="false" />
+          <Property Name="BestallningID" Type="Int32" Nullable="false" />
+          <Property Name="Antal" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Bestallning" Relationship="Self.FK_BestallningMatratt_Bestallning" FromRole="BestallningMatratt" ToRole="Bestallning" />
+          <NavigationProperty Name="Matratt" Relationship="Self.FK_BestallningMatratt_Matratt" FromRole="BestallningMatratt" ToRole="Matratt" />
+        </EntityType>
+        <EntityType Name="Kund">
+          <Key>
+            <PropertyRef Name="KundID" />
+          </Key>
+          <Property Name="KundID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Namn" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Gatuadress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Postnr" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Postort" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AnvandarNamn" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Losenord" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Bestallnings" Relationship="Self.FK_Bestallning_Kund" FromRole="Kund" ToRole="Bestallning" />
+        </EntityType>
+        <EntityType Name="Matratt">
+          <Key>
+            <PropertyRef Name="MatrattID" />
+          </Key>
+          <Property Name="MatrattID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MatrattNamn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Beskrivning" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Pris" Type="Int32" Nullable="false" />
+          <Property Name="MatrattTyp" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BestallningMatratts" Relationship="Self.FK_BestallningMatratt_Matratt" FromRole="Matratt" ToRole="BestallningMatratt" />
+          <NavigationProperty Name="MatrattTyp1" Relationship="Self.FK_Matratt_MatrattTyp" FromRole="Matratt" ToRole="MatrattTyp" />
+          <NavigationProperty Name="Produkts" Relationship="Self.MatrattProdukt" FromRole="Matratt" ToRole="Produkt" />
+        </EntityType>
+        <EntityType Name="MatrattTyp">
+          <Key>
+            <PropertyRef Name="MatrattTyp1" />
+          </Key>
+          <Property Name="MatrattTyp1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Beskrivning" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Matratts" Relationship="Self.FK_Matratt_MatrattTyp" FromRole="MatrattTyp" ToRole="Matratt" />
+        </EntityType>
+        <EntityType Name="Produkt">
+          <Key>
+            <PropertyRef Name="ProduktID" />
+          </Key>
+          <Property Name="ProduktID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProduktNamn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Matratts" Relationship="Self.MatrattProdukt" FromRole="Produkt" ToRole="Matratt" />
+        </EntityType>
+        <Association Name="FK_Bestallning_Kund">
+          <End Role="Kund" Type="Self.Kund" Multiplicity="1" />
+          <End Role="Bestallning" Type="Self.Bestallning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kund">
+              <PropertyRef Name="KundID" />
+            </Principal>
+            <Dependent Role="Bestallning">
+              <PropertyRef Name="KundID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BestallningMatratt_Bestallning">
+          <End Role="Bestallning" Type="Self.Bestallning" Multiplicity="1" />
+          <End Role="BestallningMatratt" Type="Self.BestallningMatratt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bestallning">
+              <PropertyRef Name="BestallningID" />
+            </Principal>
+            <Dependent Role="BestallningMatratt">
+              <PropertyRef Name="BestallningID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BestallningMatratt_Matratt">
+          <End Role="Matratt" Type="Self.Matratt" Multiplicity="1" />
+          <End Role="BestallningMatratt" Type="Self.BestallningMatratt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Matratt">
+              <PropertyRef Name="MatrattID" />
+            </Principal>
+            <Dependent Role="BestallningMatratt">
+              <PropertyRef Name="MatrattID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matratt_MatrattTyp">
+          <End Role="MatrattTyp" Type="Self.MatrattTyp" Multiplicity="1" />
+          <End Role="Matratt" Type="Self.Matratt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MatrattTyp">
+              <PropertyRef Name="MatrattTyp1" />
+            </Principal>
+            <Dependent Role="Matratt">
+              <PropertyRef Name="MatrattTyp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MatrattProdukt">
+          <End Role="Matratt" Type="Self.Matratt" Multiplicity="*" />
+          <End Role="Produkt" Type="Self.Produkt" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="TomasosConn" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bestallnings" EntityType="Self.Bestallning" />
+          <EntitySet Name="BestallningMatratts" EntityType="Self.BestallningMatratt" />
+          <EntitySet Name="Kunds" EntityType="Self.Kund" />
+          <EntitySet Name="Matratts" EntityType="Self.Matratt" />
+          <EntitySet Name="MatrattTyps" EntityType="Self.MatrattTyp" />
+          <EntitySet Name="Produkts" EntityType="Self.Produkt" />
+          <AssociationSet Name="FK_Bestallning_Kund" Association="Self.FK_Bestallning_Kund">
+            <End Role="Kund" EntitySet="Kunds" />
+            <End Role="Bestallning" EntitySet="Bestallnings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BestallningMatratt_Bestallning" Association="Self.FK_BestallningMatratt_Bestallning">
+            <End Role="Bestallning" EntitySet="Bestallnings" />
+            <End Role="BestallningMatratt" EntitySet="BestallningMatratts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BestallningMatratt_Matratt" Association="Self.FK_BestallningMatratt_Matratt">
+            <End Role="Matratt" EntitySet="Matratts" />
+            <End Role="BestallningMatratt" EntitySet="BestallningMatratts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matratt_MatrattTyp" Association="Self.FK_Matratt_MatrattTyp">
+            <End Role="MatrattTyp" EntitySet="MatrattTyps" />
+            <End Role="Matratt" EntitySet="Matratts" />
+          </AssociationSet>
+          <AssociationSet Name="MatrattProdukt" Association="Self.MatrattProdukt">
+            <End Role="Matratt" EntitySet="Matratts" />
+            <End Role="Produkt" EntitySet="Produkts" />
+          </AssociationSet>
+          <FunctionImport Name="GetMeny" ReturnType="Collection(TomasosModel.GetMeny_Result)" />
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(TomasosModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(TomasosModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
+        <ComplexType Name="GetMeny_Result">
+          <Property Type="String" Name="MatrattNamn" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="Pris" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TomasosModelStoreContainer" CdmEntityContainer="TomasosConn">
+          <EntitySetMapping Name="Bestallnings">
+            <EntityTypeMapping TypeName="TomasosModel.Bestallning">
+              <MappingFragment StoreEntitySet="Bestallning">
+                <ScalarProperty Name="BestallningID" ColumnName="BestallningID" />
+                <ScalarProperty Name="BestallningDatum" ColumnName="BestallningDatum" />
+                <ScalarProperty Name="Totalbelopp" ColumnName="Totalbelopp" />
+                <ScalarProperty Name="Levererad" ColumnName="Levererad" />
+                <ScalarProperty Name="KundID" ColumnName="KundID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BestallningMatratts">
+            <EntityTypeMapping TypeName="TomasosModel.BestallningMatratt">
+              <MappingFragment StoreEntitySet="BestallningMatratt">
+                <ScalarProperty Name="MatrattID" ColumnName="MatrattID" />
+                <ScalarProperty Name="BestallningID" ColumnName="BestallningID" />
+                <ScalarProperty Name="Antal" ColumnName="Antal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kunds">
+            <EntityTypeMapping TypeName="TomasosModel.Kund">
+              <MappingFragment StoreEntitySet="Kund">
+                <ScalarProperty Name="KundID" ColumnName="KundID" />
+                <ScalarProperty Name="Namn" ColumnName="Namn" />
+                <ScalarProperty Name="Gatuadress" ColumnName="Gatuadress" />
+                <ScalarProperty Name="Postnr" ColumnName="Postnr" />
+                <ScalarProperty Name="Postort" ColumnName="Postort" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="AnvandarNamn" ColumnName="AnvandarNamn" />
+                <ScalarProperty Name="Losenord" ColumnName="Losenord" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Matratts">
+            <EntityTypeMapping TypeName="TomasosModel.Matratt">
+              <MappingFragment StoreEntitySet="Matratt">
+                <ScalarProperty Name="MatrattID" ColumnName="MatrattID" />
+                <ScalarProperty Name="MatrattNamn" ColumnName="MatrattNamn" />
+                <ScalarProperty Name="Beskrivning" ColumnName="Beskrivning" />
+                <ScalarProperty Name="Pris" ColumnName="Pris" />
+                <ScalarProperty Name="MatrattTyp" ColumnName="MatrattTyp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MatrattTyps">
+            <EntityTypeMapping TypeName="TomasosModel.MatrattTyp">
+              <MappingFragment StoreEntitySet="MatrattTyp">
+                <ScalarProperty Name="MatrattTyp1" ColumnName="MatrattTyp" />
+                <ScalarProperty Name="Beskrivning" ColumnName="Beskrivning" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Produkts">
+            <EntityTypeMapping TypeName="TomasosModel.Produkt">
+              <MappingFragment StoreEntitySet="Produkt">
+                <ScalarProperty Name="ProduktID" ColumnName="ProduktID" />
+                <ScalarProperty Name="ProduktNamn" ColumnName="ProduktNamn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="MatrattProdukt" TypeName="TomasosModel.MatrattProdukt" StoreEntitySet="MatrattProdukt">
+            <EndProperty Name="Matratt">
+              <ScalarProperty Name="MatrattID" ColumnName="MatrattID" />
+            </EndProperty>
+            <EndProperty Name="Produkt">
+              <ScalarProperty Name="ProduktID" ColumnName="ProduktID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="GetMeny" FunctionName="TomasosModel.Store.GetMeny">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TomasosModel.GetMeny_Result">
+                <ScalarProperty Name="MatrattNamn" ColumnName="MatrattNamn" />
+                <ScalarProperty Name="Pris" ColumnName="Pris" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="TomasosModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="TomasosModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="TomasosModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="TomasosModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TomasosModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="TomasosModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TomasosModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="TomasosModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="TomasosModel.Store.sp_upgraddiagrams" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

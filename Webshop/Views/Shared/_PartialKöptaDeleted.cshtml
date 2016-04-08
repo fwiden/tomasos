@@ -1,0 +1,55 @@
+﻿@model  List<Webshop.Models.Matratt>
+
+
+
+
+<table class="table-bordered table-condensed" style="width:750px; text-align:left">
+
+    @foreach (var matratt in Model)
+    {
+
+        @*<div>
+            @matratt.MatrattNamn @matratt.Beskrivning @matratt.Pris  @Ajax.ActionLink("Ta bort", "DeleteMatratt", new { id = matratt.MatrattID },
+
+             new AjaxOptions
+             {
+                 UpdateTargetId = "target", // <-- DOM element ID to update
+                 InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
+                 HttpMethod = "GET" // <-- HTTP method
+             })
+        </div>*@
+
+
+           <tr>
+                <td width="150"> @matratt.MatrattNamn </td>
+                <td width="250"> @matratt.Beskrivning </td>
+                <td width="100"> @matratt.Pris kr </td>
+
+
+                <td width="100">
+                    @Ajax.ActionLink(" TaBort", "DeleteMatratt", new { id = matratt.MatrattID },
+
+                     new AjaxOptions
+                     {
+                         UpdateTargetId = "target", // <-- DOM element ID to update
+                         InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
+                         HttpMethod = "GET" // <-- HTTP method
+                     }, new { @class = "glyphicon glyphicon-trash" })
+                </td>
+               <td>Summa: @ViewBag.Total kr</td>
+            </tr>
+
+    }
+    </table>
+
+
+@*<p>@ViewBag.Total partialköptadeleted</p>*@
+
+   
+
+
+
+
+
+
+

@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Contact";
+    if (User.Identity.IsAuthenticated)
+    {
+        Layout = "~/Views/Shared/_LayoutPageLoggedIn.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    }
+}
+
+
+   <h2 id="rubrik">Kontakt</h2>
+<br /><br />
+<div class="container">
+    @*<h1>Contact </h1><br>*@
+    <div class="row text-center">
+        <div class="col-sm-3 col-xs-6 first-box">
+            <h1><span class="glyphicon glyphicon-earphone"></span></h1>
+            <h3>Phone</h3>
+            <p>+46-1700-987654</p><br>
+        </div>
+        <div class="col-sm-3 col-xs-6 second-box">
+            <h1><span class="glyphicon glyphicon-home"></span></h1>
+            <h3>Location</h3>
+            <p> Staora torget 4 , 1036, Nyköping </p><br>
+        </div>
+        <div class="col-sm-3 col-xs-6 third-box">
+            <h1><span class="glyphicon glyphicon-send"></span></h1>
+            <h3>E-mail</h3>
+            <p>info@tomasos.com</p><br>
+        </div>
+        <div class="col-sm-3 col-xs-6 fourth-box">
+            <h1><span class="glyphicon glyphicon-leaf"></span></h1>
+            <h3>Web</h3>
+            <p>www.tomasos.com</p><br>
+        </div>
+    </div>
+    <br /><br /><br />
+    
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div style="overflow:hidden;width:500px;height:500px;resize:none;max-width:100%;"><div id="my-map-canvas" style="height:100%; width:100%;max-width:100%;"><iframe style="height:100%;width:100%;border:0;" frameborder="0" src="https://www.google.com/maps/embed/v1/place?q=Nyköpings+kommun,+Stora+Torget,+Nyköping,+Sverige&key=AIzaSyAN0om9mFmy1QN6Wf54tXAowK4eT0ZUPrU"></iframe></div><a class="google-map-html" href="https://www.hostingreviews.website/" id="enable-map-data">web hosting reviews</a>
+        <style>
+            #my-map-canvas .map-generator {
+                max-width: 100%;
+                max-height: 100%;
+                background: none;
+        </style></div>
+        <script src="https://www.hostingreviews.website/google-maps-authorization.js?id=19bf7c55-b19b-d4ce-f560-e9cb3abb9eac&c=google-map-html&u=1452188138" defer="defer" async="async"></script>
+
+
+
+
+
+
+    </div>
+</div>

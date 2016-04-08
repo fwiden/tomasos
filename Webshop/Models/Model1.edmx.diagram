@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1b2290bb86244f56ab1c3ac903ea07d8" Name="Diagram1">
+        <EntityTypeShape EntityType="TomasosModel.Bestallning" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="TomasosModel.BestallningMatratt" Width="2.875" PointX="5.375" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TomasosModel.Kund" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TomasosModel.Matratt" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TomasosModel.MatrattTyp" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TomasosModel.Produkt" Width="1.5" PointX="1.625" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="TomasosModel.FK_Bestallning_Kund" ManuallyRouted="false" />
+        <AssociationConnector Association="TomasosModel.FK_BestallningMatratt_Bestallning" ManuallyRouted="false" />
+        <AssociationConnector Association="TomasosModel.FK_BestallningMatratt_Matratt" ManuallyRouted="false" />
+        <AssociationConnector Association="TomasosModel.FK_Matratt_MatrattTyp" ManuallyRouted="false" />
+        <AssociationConnector Association="TomasosModel.MatrattProdukt" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

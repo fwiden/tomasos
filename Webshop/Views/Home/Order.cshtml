@@ -1,0 +1,28 @@
+﻿@model List<Webshop.Models.Bestallning>
+
+@{
+    ViewBag.Title = "Order";
+    Layout = "~/Views/Shared/_LayoutPageLoggedIn.cshtml";
+}
+
+<br />
+<br />
+
+<div class="container">
+    <table class="table table-hover table-striped table-bordered bg-danger bg-info" >
+        <thead><tr><th><h3>Orderhistorik för: @HttpContext.Current.User.Identity.Name</h3></th></tr>
+        <tr><th>Datum</th><th>Användarnamn</th><th>Leveransstatus</th><th>Belopp</th></tr></thead>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.BestallningDatum</td><td>@item.Kund.AnvandarNamn</td><td>                   
+                
+                Levererad: @item.Levererad</td><td>Total:@item.Totalbelopp kr</td>
+            </tr>
+        }
+    </table>
+
+    
+
+
+</div>

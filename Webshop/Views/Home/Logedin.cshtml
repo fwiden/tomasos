@@ -1,0 +1,82 @@
+﻿@model List<Webshop.Models.Matratt>
+
+@{
+    ViewBag.Title = "Sucess";
+    Layout = "~/Views/Shared/_LayoutPageLoggedIn.cshtml";
+}
+
+
+<div class="bs-example" style="text-align:center">
+    <div class="alert alert-success fade in">
+        <a href="#" class="close" data-dismiss="alert">×</a>
+       
+        <strong>Välkommen @HttpContext.Current.User.Identity.Name! -  Du är nu inloggad och kan beställa </strong> 
+    </div>
+</div>
+
+<br />
+
+<table class="table table-striped table-bordered table-condensed" style="text-align:left">
+    <thead><tr class="alert-success"><th>Maträtt</th><th>Beskrivning</th><th>Typ</th><th>Pris</th><th>Åtgärd</th></tr></thead> 
+    
+
+      @foreach (var matratt in Model)
+      {
+        <tr>
+            <td>@matratt.MatrattNamn </td>
+            <td>@matratt.Beskrivning</td>  
+            <td>@matratt.MatrattTyp1.Beskrivning</td>         
+            <td class="tdkop">@matratt.Pris kr</td>
+           
+            <td>@Ajax.ActionLink(" LäggTill", "AddToChart", new { id = matratt.MatrattID },
+
+            new AjaxOptions
+            {
+                UpdateTargetId = "target", // <-- DOM element ID to update
+                InsertionMode = InsertionMode.InsertAfter, // <-- Replace the content of DOM element
+                HttpMethod = "GET" // <-- HTTP method
+            }, new { @class = "glyphicon glyphicon-shopping-cart" })
+          </td>             
+               
+            @*<td><a href="@Ajax.ActionLink("Köp","AddToChart", new { id = matratt.MatrattID })"><img src="~/kop.gif" /> </a></td>*@            
+        </tr>        
+          
+      }
+</table>
+
+
+<h2><span class="glyphicon glyphicon-shopping-cart"> Varukorg:</span></h2>
+
+
+<div class="row">
+    @ViewBag.Totalkr
+    <div class="col-md-8" id="target">
+       @*@TempData["total"] kr*@
+    </div>
+        
+
+    @*<table class="alert-warning" id="target" style="text-align:left ;width:500px"></table>
+    <div class="">@Html.ActionLink("Gå till kassan", "ViewChart")</div>*@
+        <div class="col-md-4">
+           
+            <a href="@Url.Action("ViewChart", "Home")" class="btn btn-primary"><i class="fa fa-fw fa-bar-chart-o"></i>Till Kassan </a>
+
+           
+        </div>   
+
+    
+
+</div>
+    
+    
+    
+
+
+
+
+
+
+
+
+
+

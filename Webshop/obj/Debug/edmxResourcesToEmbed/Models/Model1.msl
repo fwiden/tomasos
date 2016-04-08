@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TomasosModelStoreContainer" CdmEntityContainer="TomasosConn">
+    <EntitySetMapping Name="Bestallnings">
+      <EntityTypeMapping TypeName="TomasosModel.Bestallning">
+        <MappingFragment StoreEntitySet="Bestallning">
+          <ScalarProperty Name="BestallningID" ColumnName="BestallningID" />
+          <ScalarProperty Name="BestallningDatum" ColumnName="BestallningDatum" />
+          <ScalarProperty Name="Totalbelopp" ColumnName="Totalbelopp" />
+          <ScalarProperty Name="Levererad" ColumnName="Levererad" />
+          <ScalarProperty Name="KundID" ColumnName="KundID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BestallningMatratts">
+      <EntityTypeMapping TypeName="TomasosModel.BestallningMatratt">
+        <MappingFragment StoreEntitySet="BestallningMatratt">
+          <ScalarProperty Name="MatrattID" ColumnName="MatrattID" />
+          <ScalarProperty Name="BestallningID" ColumnName="BestallningID" />
+          <ScalarProperty Name="Antal" ColumnName="Antal" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Kunds">
+      <EntityTypeMapping TypeName="TomasosModel.Kund">
+        <MappingFragment StoreEntitySet="Kund">
+          <ScalarProperty Name="KundID" ColumnName="KundID" />
+          <ScalarProperty Name="Namn" ColumnName="Namn" />
+          <ScalarProperty Name="Gatuadress" ColumnName="Gatuadress" />
+          <ScalarProperty Name="Postnr" ColumnName="Postnr" />
+          <ScalarProperty Name="Postort" ColumnName="Postort" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+          <ScalarProperty Name="AnvandarNamn" ColumnName="AnvandarNamn" />
+          <ScalarProperty Name="Losenord" ColumnName="Losenord" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Matratts">
+      <EntityTypeMapping TypeName="TomasosModel.Matratt">
+        <MappingFragment StoreEntitySet="Matratt">
+          <ScalarProperty Name="MatrattID" ColumnName="MatrattID" />
+          <ScalarProperty Name="MatrattNamn" ColumnName="MatrattNamn" />
+          <ScalarProperty Name="Beskrivning" ColumnName="Beskrivning" />
+          <ScalarProperty Name="Pris" ColumnName="Pris" />
+          <ScalarProperty Name="MatrattTyp" ColumnName="MatrattTyp" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MatrattTyps">
+      <EntityTypeMapping TypeName="TomasosModel.MatrattTyp">
+        <MappingFragment StoreEntitySet="MatrattTyp">
+          <ScalarProperty Name="MatrattTyp1" ColumnName="MatrattTyp" />
+          <ScalarProperty Name="Beskrivning" ColumnName="Beskrivning" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Produkts">
+      <EntityTypeMapping TypeName="TomasosModel.Produkt">
+        <MappingFragment StoreEntitySet="Produkt">
+          <ScalarProperty Name="ProduktID" ColumnName="ProduktID" />
+          <ScalarProperty Name="ProduktNamn" ColumnName="ProduktNamn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="MatrattProdukt" TypeName="TomasosModel.MatrattProdukt" StoreEntitySet="MatrattProdukt">
+      <EndProperty Name="Matratt">
+        <ScalarProperty Name="MatrattID" ColumnName="MatrattID" />
+      </EndProperty>
+      <EndProperty Name="Produkt">
+        <ScalarProperty Name="ProduktID" ColumnName="ProduktID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="GetMeny" FunctionName="TomasosModel.Store.GetMeny">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TomasosModel.GetMeny_Result">
+          <ScalarProperty Name="MatrattNamn" ColumnName="MatrattNamn" />
+          <ScalarProperty Name="Pris" ColumnName="Pris" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="TomasosModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="TomasosModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="TomasosModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="TomasosModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TomasosModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="TomasosModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TomasosModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="TomasosModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="TomasosModel.Store.sp_upgraddiagrams" />
+  </EntityContainerMapping>
+</Mapping>

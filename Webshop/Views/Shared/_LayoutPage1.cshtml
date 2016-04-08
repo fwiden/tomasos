@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+  
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />   
+    <link href="~/Content/StyleSheet1.css" rel="stylesheet" />  
+    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    
+    
+   
+</head>
+<body>   
+    
+
+    <div class="toprow">
+        <p><hr /></p>
+    </div>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" id="rubrik" href="~/Home/Index" style="font-family:Verdana; font-size:20px;">TOMASO'S Pizza</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="~/Home/Index">Hem</a></li>                   
+                    <li><a href="~/Home/About">Om Oss</a></li>
+                    <li><a href="~/Home/Menu">Menu</a></li>
+                    <li><a href="~/Home/Contact">Kontakt</a></li>
+                </ul>
+               
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="~/Home/Signup"><span class="glyphicon glyphicon-user"></span> Registrera</a></li>
+                    @*<li>@Html.ActionLink("Signup","Signup","Home")</li>*@
+                    <li><a href="~/Home/Login"><span class="glyphicon glyphicon-log-in"></span> Logga in</a></li>
+                    
+                </ul>
+            </div>
+        </nav>
+    
+        <div class="container">           
+            @RenderBody()
+        </div>
+  
+    <script src="~/Scripts/jquery-1.9.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>    
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+   
+</body>
+</html>

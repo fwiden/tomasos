@@ -1,0 +1,35 @@
+﻿@model List<Webshop.Models.Matratt>
+
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        Layout = "~/Views/Shared/_LayoutPageLoggedIn.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    }
+
+
+
+}
+
+<h2 id="rubrik">Meny</h2>
+<h3>Var god <a href="~/Home/Signup">registrera</a> eller <a href="~/Home/Login">Logga in</a> för att beställa!</h3>
+<br />
+
+<table class="table table-striped table-bordered table-condensed" style="text-align:left">
+    <thead><tr class="alert-warning"><th>Maträtt</th><th>Beskrivning</th><th>Typ</th><th>Pris</th></tr></thead>
+   
+    @foreach (var matratt in Model)
+    {
+        <tr>
+            <td>@matratt.MatrattNamn </td>
+            <td>@matratt.Beskrivning</td> 
+            <td>@matratt.MatrattTyp1.Beskrivning</td>          
+            <td>@matratt.Pris kr</td>
+            
+        </tr>
+    }
+</table>
+

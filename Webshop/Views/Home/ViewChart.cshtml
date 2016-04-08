@@ -1,0 +1,58 @@
+﻿@model List<Webshop.Models.Matratt>
+
+@{
+    ViewBag.Title = "ViewChart";
+    Layout = "~/Views/Shared/_LayoutPageLoggedIn.cshtml";
+}
+
+
+
+<div class="alert alert-info" style="text-align:center; font-size:22px">Innehåll i varukorgen för: @HttpContext.Current.User.Identity.Name </div>
+<div>
+
+    
+    <table class="table table-bordered table-striped table-condensed" style="text-align:left; width:500px">
+        <thead><tr class="alert-info"><th>Maträtt</th><th>Beskrivning</th><th>Typ</th><th>Pris</th></tr></thead>      
+
+        
+       
+        @foreach(var product in Model)
+        {
+            <tr>
+                <td>@product.MatrattNamn</td>
+                <td>@product.Beskrivning</td>    
+                <td>@product.MatrattTyp1.Beskrivning</td>              
+                
+                <td>@product.Pris</td>
+
+            </tr>
+        }             
+
+    </table> 
+
+    <table class="table table-bordered table-striped table-condensed" style="text-align:right; width:500px">
+        <tr>
+            <td><b>Total: @ViewBag.Total kr</b></td>
+           
+        </tr>
+    </table>
+
+    <table style="width:500px">
+        <tr>
+            <td><a href="@Url.Action("PlacOrder", "Home")" class="btn btn-primary">Placera Order</a></td><td></td>
+            <td><a href="@Url.Action("ViewProductsShopping", "Home")" class="btn btn-warning" margin-left:25px;">Ändra Order </a></td>
+
+        </tr>
+    </table>
+  
+
+
+    <br /><br />
+
+     <h2 style="color:red">  @TempData["fff"]</h2>
+    <h3>@TempData["Kundnamn"]  </h3>
+    <h3>@TempData["kundadress"]</h3>
+    <h3>@TempData["Kundpostnummer"]</h3>
+    <h3>@TempData["Kundpostort"]</h3>      
+    
+</div>

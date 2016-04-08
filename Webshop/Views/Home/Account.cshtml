@@ -1,0 +1,87 @@
+﻿@model Webshop.Models.Kund
+
+@{
+    ViewBag.Title = "Account";
+    Layout = "~/Views/Shared/_LayoutPageLoggedIn.cshtml";
+}
+
+@*<h2>My Account</h2>*@
+
+<div class="container">
+
+    <div class="form-control" style="text-align:center">@Html.ActionLink("Mina Ordrar", "Order")</div>
+
+    <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">Edit</div>
+            </div>
+
+            <div style="padding-top:30px" class="panel-body">
+
+                <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+
+
+   @using (Html.BeginForm("Account", "Home", FormMethod.Post))
+   {
+    <div class="control-group">
+        @Html.Label("Mata in Namn: ")
+        @Html.TextBoxFor(n => n.Namn, new { @placeholder = Model.Namn, @class = "form-control" }) <b class="vali">@Html.ValidationMessageFor(x => x.Namn)</b>
+        <p class="help-block">Please provide your name </p>
+    </div>
+
+    <div class="control-group ">
+        @Html.Label("Mata in Gatuadress: ")
+        @Html.TextBoxFor(g => g.Gatuadress, new { @class = "form-control", @placeholder = Model.Gatuadress, @rows = "10", id = "boxGatuadress", required = "true" })  <b class="vali">@Html.ValidationMessageFor(x => x.Gatuadress)</b>
+        <p class="help-block">Please provide your Gatuadress </p>
+    </div>
+
+    <div class="control-group">
+        @Html.Label("Mata in Postnummer: ")
+        @Html.TextBoxFor(g => g.Postnr, new { @class = "form-control", @placeholder = Model.Postnr, @rows = "10", id = "boxPostNr", required = "true" })  <b class="vali">@Html.ValidationMessageFor(x => x.Postnr)</b>
+        <p class="help-block">Please provide your Postnummer </p>
+    </div>
+
+    <div class="control-group">
+        @Html.Label("Mata in Postort: ")
+        @Html.TextBoxFor(g => g.Postort, new { @class = "form-control", @placeholder = Model.Postort, @rows = "10", id = "boxPostOrt", required = "true" })<b class="vali">@Html.ValidationMessageFor(x => x.Postort)</b>
+        <p class="help-block">Please provide your Postort </p>
+    </div>
+
+    <div class="control-group">
+        @Html.Label("Mata in Email: ")
+        @Html.TextBoxFor(g => g.Email, new { @class = "form-control", @placeholder = Model.Email, @rows = "10", id = "boxEmail" })
+        @*<p class="help-block">Please provide your Email</p>*@
+    </div>
+
+    <div class="control-group">
+        @Html.Label("Mata in Telefon: ")
+        @Html.TextBoxFor(g => g.Telefon, new { @class = "form-control", @placeholder = Model.Telefon, @rows = "10", id = "boxTelefon" })
+        @*<p class="help-block">Please provide your Telefon</p>*@
+    </div>
+
+    <div class="control-group">
+        @Html.Label("Mata in Användarnamn: ")
+        @Html.TextBoxFor(g => g.AnvandarNamn, new { @class = "form-control", @placeholder = Model.AnvandarNamn, @rows = "10", id = "boxAnvändarNamn", required = "true" })<b class="vali">@Html.ValidationMessageFor(x => x.AnvandarNamn)</b>
+        @*<p class="help-block">Please provide your Användarnamn </p>*@
+    </div>
+
+    <div class="control-group">
+        @Html.Label("Mata in Lösenord: ")
+        @Html.PasswordFor(g => g.Losenord, new { @class = "form-control", @placeholder = Model.Losenord, @rows = "10", id = "boxPassword", required = "true" })<b class="vali">@Html.ValidationMessageFor(x => x.Losenord)</b>
+        @*<p class="help-block">Please provide your Lösenord </p>*@
+    </div>
+
+    @Html.HiddenFor(x => x.KundID);
+
+    <div class="control-group">
+        <!-- Button -->
+        <input id="Submit1" type="submit" value="Registrera" class="btn btn-success" style="margin-top:50px" />
+        @*<input id="" type="" value="Clear" class="btn btn-default" />*@
+    </div>
+
+   }
+            </div>
+        </div>
+    </div>
+</div>

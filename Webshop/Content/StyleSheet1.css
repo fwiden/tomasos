@@ -1,0 +1,83 @@
+﻿@import "bourbon";
+
+body {
+   
+	background: #eee !important;	
+}
+
+#rubrik{ font-family: 'Lobster', cursive;}
+
+
+.formpadding { padding-bottom:px;
+}
+
+
+
+#BoxLeft{margin-left:20px; width:600px; height:1000px; float:left;}
+
+#BoxRight{width:300px; height:400px; float:right;}
+
+.summaryStyle{font-weight:bold;}
+
+.tdkop{width:100px;}
+
+.bs-example{margin: 20px;}
+
+.vali{color:red;}
+
+.first-box{padding:10px;background:#9C0;}
+.second-box{padding:10px; background:#39F;}
+.third-box{padding:10px;background:#F66;}
+.fourth-box{padding:10px;background:#6CC;}
+
+.control-group{margin: 10px 0}
+
+.carousel-inner > .item > img {
+    margin: 0 auto;
+}
+
+.wrapper {	
+	margin-top: 80px;
+  margin-bottom: 80px;
+}
+
+.form-signin {
+  max-width: 380px;
+  padding: 15px 35px 45px;
+  margin: 0 auto;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,0.1);  
+
+  .form-signin-heading,
+	.checkbox {
+	  margin-bottom: 30px;
+	}
+
+	.checkbox {
+	  font-weight: normal;
+	}
+
+	.form-control {
+	  position: relative;
+	  font-size: 16px;
+	  height: auto;
+	  padding: 10px;
+		@include box-sizing(border-box);
+
+		&:focus {
+		  z-index: 2;
+		}
+	}
+
+	input[type="text"] {
+	  margin-bottom: -1px;
+	  border-bottom-left-radius: 0;
+	  border-bottom-right-radius: 0;
+	}
+
+	input[type="password"] {
+	  margin-bottom: 20px;
+	  border-top-left-radius: 0;
+	  border-top-right-radius: 0;
+	}
+}

@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "About";
+    if (User.Identity.IsAuthenticated)
+    {
+        Layout = "~/Views/Shared/_LayoutPageLoggedIn.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    }
+}
+
+<h2 id="rubrik">Om oss</h2>
+
+<div class="well well-sm alert-danger">Hej ochh välkommen! Missa inte våra erbjudanden!</div>
+
+@ViewBag.Message

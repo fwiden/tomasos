@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TomasosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Bestallning">
+    <Key>
+      <PropertyRef Name="BestallningID" />
+    </Key>
+    <Property Name="BestallningID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BestallningDatum" Type="datetime" Nullable="false" />
+    <Property Name="Totalbelopp" Type="int" Nullable="false" />
+    <Property Name="Levererad" Type="bit" Nullable="false" />
+    <Property Name="KundID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BestallningMatratt">
+    <Key>
+      <PropertyRef Name="MatrattID" />
+      <PropertyRef Name="BestallningID" />
+    </Key>
+    <Property Name="MatrattID" Type="int" Nullable="false" />
+    <Property Name="BestallningID" Type="int" Nullable="false" />
+    <Property Name="Antal" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Kund">
+    <Key>
+      <PropertyRef Name="KundID" />
+    </Key>
+    <Property Name="KundID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Namn" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Gatuadress" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Postnr" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Postort" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Telefon" Type="varchar" MaxLength="50" />
+    <Property Name="AnvandarNamn" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Losenord" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Matratt">
+    <Key>
+      <PropertyRef Name="MatrattID" />
+    </Key>
+    <Property Name="MatrattID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MatrattNamn" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Beskrivning" Type="varchar" MaxLength="200" />
+    <Property Name="Pris" Type="int" Nullable="false" />
+    <Property Name="MatrattTyp" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MatrattProdukt">
+    <Key>
+      <PropertyRef Name="MatrattID" />
+      <PropertyRef Name="ProduktID" />
+    </Key>
+    <Property Name="MatrattID" Type="int" Nullable="false" />
+    <Property Name="ProduktID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MatrattTyp">
+    <Key>
+      <PropertyRef Name="MatrattTyp" />
+    </Key>
+    <Property Name="MatrattTyp" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Beskrivning" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Produkt">
+    <Key>
+      <PropertyRef Name="ProduktID" />
+    </Key>
+    <Property Name="ProduktID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProduktNamn" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Bestallning_Kund">
+    <End Role="Kund" Type="Self.Kund" Multiplicity="1" />
+    <End Role="Bestallning" Type="Self.Bestallning" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kund">
+        <PropertyRef Name="KundID" />
+      </Principal>
+      <Dependent Role="Bestallning">
+        <PropertyRef Name="KundID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BestallningMatratt_Bestallning">
+    <End Role="Bestallning" Type="Self.Bestallning" Multiplicity="1" />
+    <End Role="BestallningMatratt" Type="Self.BestallningMatratt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bestallning">
+        <PropertyRef Name="BestallningID" />
+      </Principal>
+      <Dependent Role="BestallningMatratt">
+        <PropertyRef Name="BestallningID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BestallningMatratt_Matratt">
+    <End Role="Matratt" Type="Self.Matratt" Multiplicity="1" />
+    <End Role="BestallningMatratt" Type="Self.BestallningMatratt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Matratt">
+        <PropertyRef Name="MatrattID" />
+      </Principal>
+      <Dependent Role="BestallningMatratt">
+        <PropertyRef Name="MatrattID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Matratt_MatrattTyp">
+    <End Role="MatrattTyp" Type="Self.MatrattTyp" Multiplicity="1" />
+    <End Role="Matratt" Type="Self.Matratt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MatrattTyp">
+        <PropertyRef Name="MatrattTyp" />
+      </Principal>
+      <Dependent Role="Matratt">
+        <PropertyRef Name="MatrattTyp" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MatrattProdukt_Matratt">
+    <End Role="Matratt" Type="Self.Matratt" Multiplicity="1" />
+    <End Role="MatrattProdukt" Type="Self.MatrattProdukt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Matratt">
+        <PropertyRef Name="MatrattID" />
+      </Principal>
+      <Dependent Role="MatrattProdukt">
+        <PropertyRef Name="MatrattID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MatrattProdukt_Produkt">
+    <End Role="Produkt" Type="Self.Produkt" Multiplicity="1" />
+    <End Role="MatrattProdukt" Type="Self.MatrattProdukt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Produkt">
+        <PropertyRef Name="ProduktID" />
+      </Principal>
+      <Dependent Role="MatrattProdukt">
+        <PropertyRef Name="ProduktID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="GetMeny" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="TomasosModelStoreContainer">
+    <EntitySet Name="Bestallning" EntityType="Self.Bestallning" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BestallningMatratt" EntityType="Self.BestallningMatratt" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kund" EntityType="Self.Kund" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Matratt" EntityType="Self.Matratt" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MatrattProdukt" EntityType="Self.MatrattProdukt" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MatrattTyp" EntityType="Self.MatrattTyp" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Produkt" EntityType="Self.Produkt" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Bestallning_Kund" Association="Self.FK_Bestallning_Kund">
+      <End Role="Kund" EntitySet="Kund" />
+      <End Role="Bestallning" EntitySet="Bestallning" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BestallningMatratt_Bestallning" Association="Self.FK_BestallningMatratt_Bestallning">
+      <End Role="Bestallning" EntitySet="Bestallning" />
+      <End Role="BestallningMatratt" EntitySet="BestallningMatratt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BestallningMatratt_Matratt" Association="Self.FK_BestallningMatratt_Matratt">
+      <End Role="Matratt" EntitySet="Matratt" />
+      <End Role="BestallningMatratt" EntitySet="BestallningMatratt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Matratt_MatrattTyp" Association="Self.FK_Matratt_MatrattTyp">
+      <End Role="MatrattTyp" EntitySet="MatrattTyp" />
+      <End Role="Matratt" EntitySet="Matratt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MatrattProdukt_Matratt" Association="Self.FK_MatrattProdukt_Matratt">
+      <End Role="Matratt" EntitySet="Matratt" />
+      <End Role="MatrattProdukt" EntitySet="MatrattProdukt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MatrattProdukt_Produkt" Association="Self.FK_MatrattProdukt_Produkt">
+      <End Role="Produkt" EntitySet="Produkt" />
+      <End Role="MatrattProdukt" EntitySet="MatrattProdukt" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
